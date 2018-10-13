@@ -1,11 +1,11 @@
-from train_data import train_data
-from train_data import invert_output
+from dataset_and_label import create_data
+from sklearn.preprocessing import OneHotEncoder
 import tensorflow as tf
 import numpy as np
 
-train_x,train_y,label = train_data()
+train_x,train_y,label = create_data()
 
-test_x,test_y,label = train_data()
+test_x,test_y,label = create_data()
 
 n_nodes_hl1 = 200
 n_nodes_hl2 = 200
@@ -73,7 +73,8 @@ def train_neural_network(x):
 				i+=batch_size
 				
 			print('Epoch', epoch+1, 'completed out of',hm_epochs,'loss:',epoch_loss)
-			invert_output(label, batch_y )
+			invert_action =  label.inverse_transform(batch_y)
+			print(invert_action)
 		correct = tf.equal(tf.argmax(prediction, 1), tf.argmax(y, 1))
 		accuracy = tf.reduce_mean(tf.cast(correct, 'float'))
 
