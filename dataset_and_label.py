@@ -26,8 +26,7 @@ def create_data():
 
     invert_action =  enc2.inverse_transform(list_actionenc)
 
-    return list_ipenc, list_actionenc, enc2
-
+    return list_ipenc, list_actionenc, enc, enc2
 
 
     
