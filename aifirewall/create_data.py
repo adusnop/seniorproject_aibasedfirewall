@@ -11,7 +11,7 @@ def write_rules():
         for line in filehandle:
             l_count += 1
             if l_count >= 801:
-                file_data = filehandle3
+                file_data = filehandle2
             else:
                 file_data = filehandle2
             ip = line[:-1]

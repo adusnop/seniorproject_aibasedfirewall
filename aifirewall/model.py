@@ -1,15 +1,13 @@
-from create_data_and_label import create_data_train
-from create_data_and_label import create_data_test
+from create_data_and_label import create_data_model
 import tensorflow as tf
 import numpy as np
 
-train_x, train_y = create_data_train()
+train_x, train_y, test_x, test_y = create_data_model()
 
-test_x, test_y = create_data_train()
 
-n_nodes_hl1 = 500
-n_nodes_hl2 = 500
-n_nodes_hl3 = 500
+n_nodes_hl1 = 250
+n_nodes_hl2 = 250
+n_nodes_hl3 = 250
 
 n_classes = 2
 batch_size = 250
@@ -33,7 +31,7 @@ hidden_3_layer = {'f_fum': n_nodes_hl3,
 output_layer = {'f_fum': None,
                 'weight': tf.Variable(tf.random_normal([n_nodes_hl3, n_classes])),
                 'bias': tf.Variable(tf.random_normal([n_classes])), }
-
+#testttttt
 
 def neural_network_model(data):
     l1 = tf.add(tf.matmul(data, hidden_1_layer['weight']), hidden_1_layer['bias'])
@@ -93,7 +91,7 @@ def train_neural_network(x):
         print(ddd)
         accuracy = tf.reduce_mean(tf.cast(correct, 'float'))
 
-        print("Accuracy:", accuracy.eval({x: np.array(test_x[start:end]), y: np.array(test_y[start:end])}))
+        print("Accuracy:", accuracy.eval({x: test_x, y: test_y}))
 
 
 train_neural_network(x)
