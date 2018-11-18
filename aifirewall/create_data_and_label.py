@@ -2,12 +2,10 @@ import numpy as np
 from sklearn.preprocessing import OneHotEncoder
 import csv
 
+
 def create_data_model():
-    list_ip = []
-    list_action = []
     with open('rules1.csv', 'r') as f:
         line = csv.reader(f)
-        #next(line)
         list_ip = list(line)
         list_action = [item.pop(0) for item in list_ip]
         print(list_action)
@@ -31,8 +29,7 @@ def create_data_model():
     print('******')
     print(len(list_iptest))
 
-
-    return list_iptrain, list_actiontrain, list_iptest, list_actiontest
+    return list_iptrain, list_actiontrain, list_iptest, list_actiontest, list_ip
 
 
 create_data_model()

@@ -2,8 +2,7 @@ from create_data_and_label import create_data_model
 import tensorflow as tf
 import numpy as np
 
-train_x, train_y, test_x, test_y = create_data_model()
-
+train_x, train_y, test_x, test_y, list_ip = create_data_model()
 
 n_nodes_hl1 = 250
 n_nodes_hl2 = 250
@@ -31,7 +30,7 @@ hidden_3_layer = {'f_fum': n_nodes_hl3,
 output_layer = {'f_fum': None,
                 'weight': tf.Variable(tf.random_normal([n_nodes_hl3, n_classes])),
                 'bias': tf.Variable(tf.random_normal([n_classes])), }
-#testttttt
+
 
 def neural_network_model(data):
     l1 = tf.add(tf.matmul(data, hidden_1_layer['weight']), hidden_1_layer['bias'])
@@ -55,12 +54,11 @@ def train_neural_network(x):
 
     with tf.Session() as sess:
         sess.run(tf.initialize_all_variables())
-
         for epoch in range(hm_epochs):
+            result_array = np.array([])
             epoch_loss = 0
             i = 0
-            a_count = 0
-            d_count = 0
+
             while i <= len(train_x):
                 start = i
                 end = i + batch_size
@@ -72,26 +70,32 @@ def train_neural_network(x):
                 epoch_loss += c
                 i += batch_size
                 result = (sess.run(tf.argmax(prediction.eval(feed_dict={x: batch_x}), 1)))
-                print(result)
-                a = len(result)
-                for q in range(a):
-                    if result[q] == 0:
-                        print('Allow')
-                        a_count += 1
-                    elif result[q] == 1:
-                        print('Deny')
-                        d_count += 1
+                # print(result)
+                result_array = np.append(result_array, result)
 
-            print(a_count)
-            print(d_count)
             print('Epoch', epoch + 1, 'completed out of', hm_epochs, 'loss:', epoch_loss)
 
         correct = tf.equal(tf.argmax(prediction, 1), tf.argmax(y, 1))
-        ddd = tf.argmax(prediction, 1)
-        print(ddd)
         accuracy = tf.reduce_mean(tf.cast(correct, 'float'))
 
         print("Accuracy:", accuracy.eval({x: test_x, y: test_y}))
 
+        return result_array
 
-train_neural_network(x)
+
+def show_output(list_ip):
+    a_count = 0
+    d_count = 0
+    result = train_neural_network(x)
+    for q in range(len(result)):
+        if result[q] == 0:
+            print('Allow' + str(list_ip[q]))
+            a_count += 1
+        elif result[q] == 1:
+            print('Deny' + str(list_ip[q]))
+            d_count += 1
+    print(a_count)
+    print(d_count)
+
+
+show_output(list_ip)
