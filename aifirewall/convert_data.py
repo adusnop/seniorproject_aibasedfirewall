@@ -4,7 +4,7 @@ import csv
 
 
 def create_data_model():
-    with open('rules1.csv', 'r') as f:
+    with open('rules_train.csv', 'r') as f:
         line = csv.reader(f)
         list_ip = list(line)
         list_action = [item.pop(0) for item in list_ip]
@@ -22,10 +22,10 @@ def create_data_model():
     list_actionenc = enc2.transform(list_action).toarray()
 
     print(len(list_ipenc))
-    list_iptrain = list_ipenc[:900]
-    list_iptest = list_ipenc[100:]
-    list_actiontrain = list_actionenc[:900]
-    list_actiontest = list_actionenc[100:]
+    list_iptrain = list_ipenc[:150]
+    list_iptest = list_ipenc[150:]
+    list_actiontrain = list_actionenc[:150]
+    list_actiontest = list_actionenc[150:]
     print('******')
     print(len(list_iptest))
 
@@ -33,3 +33,8 @@ def create_data_model():
 
 
 create_data_model()
+
+def create_data_input():
+    a =3
+create_data_input()
+
