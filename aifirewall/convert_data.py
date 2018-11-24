@@ -19,14 +19,23 @@ def create_data_model():
     list_ipenc = enc.fit_transform(list_ip).toarray()
     list_actionenc = enc2.fit_transform(list_action).toarray()
 
-    list_iptrain = list_ipenc[:150]
-    list_iptest = list_ipenc[150:]
-    list_actiontrain = list_actionenc[:150]
-    list_actiontest = list_actionenc[150:]
+    list_iptrain = list_ipenc[:400]
+    list_iptest = list_ipenc[400:]
+    list_actiontrain = list_actionenc[:400]
+    list_actiontest = list_actionenc[400:]
 
     print(list_ipenc.shape)
     print(len(list_ipenc))
 
+
+
+    return list_iptrain, list_actiontrain, list_iptest, list_actiontest, list_ip
+
+
+create_data_model()
+
+
+def create_data_input():
     with open('rules_input.csv', 'r') as f:
         line1 = csv.reader(f)
         list_ip1 = [li[:-1] for li in line1]
@@ -39,15 +48,6 @@ def create_data_model():
     print(list_ipenc1.shape)
     print(len(list_ipenc1))
 
-
-    return list_iptrain, list_actiontrain, list_iptest, list_actiontest, list_ip, list_ipenc1, list_ip1
-
-
-create_data_model()
-
-
-def create_data_input():
-   a = 2
-
+    return list_ipenc1, list_ip1
 
 create_data_input()

@@ -5,14 +5,15 @@ from convert_data import create_data_input
 import tensorflow as tf
 import numpy as np
 
-train_x, train_y, test_x, test_y, list_ip, x_input, input_ip = create_data_model()
+train_x, train_y, test_x, test_y, list_ip = create_data_model()
+x_input, input_ip = create_data_input()
 
-n_nodes_hl1 = 100
-n_nodes_hl2 = 100
-n_nodes_hl3 = 100
+n_nodes_hl1 = 200
+n_nodes_hl2 = 200
+n_nodes_hl3 = 200
 
 n_classes = 2
-batch_size = 20
+batch_size = 200
 hm_epochs = 20
 
 x = tf.placeholder('float')

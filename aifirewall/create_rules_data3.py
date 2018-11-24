@@ -43,9 +43,9 @@ def write_rules_train():
             file_data.write('in,')
             file_data.write('eth0,')
             file_data.write(protocol + ',')
-            file_data.write(ip + ',')
+
             file_data.write(port + ',')
-            file_data.write(ip_dest + ',')
+
             file_data.write(port + ',')
             file_data.write('\n')
 
@@ -84,9 +84,9 @@ def write_rules_input():
             file_data_input.write('in,')
             file_data_input.write('eth0,')
             file_data_input.write(protocol + ',')
-            file_data_input.write(ip + ',')
+
             file_data_input.write(port + ',')
-            file_data_input.write(ip_dest + ',')
+
             file_data_input.write(port + ',')
             file_data_input.write('\n')
 
