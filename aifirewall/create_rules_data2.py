@@ -6,10 +6,8 @@ def create_ip():
     with open('IP_train.txt', 'w') as filehandle, open('IP_input.txt', 'w') as filehandle2:
         for i in range(300):
             ip_range2 = random.choice(ip_range)
-            num_range3 = random.randint(1, 256)
-            num_range4 = random.randint(1, 256)
-            ip_source_train = ip_range2 + str(num_range3) + '.0/24' + '\n'
-            ip_source_input = ip_range2 + str(num_range3) + '.' + str(num_range4) + '/24' + '\n'
+            ip_source_train = ip_range2 + str(random.randint(1, 256)) + '.' + str(random.randint(1, 256)) + '/24' + '\n'
+            ip_source_input = ip_range2 + str(random.randint(1, 256)) + '.' + str(random.randint(1, 256)) + '/24' + '\n'
             filehandle.write(ip_source_train)
             filehandle2.write(ip_source_input)
 

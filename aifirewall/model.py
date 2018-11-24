@@ -1,10 +1,11 @@
 from numpy.core.multiarray import ndarray
 
 from convert_data import create_data_model
+from convert_data import create_data_input
 import tensorflow as tf
 import numpy as np
 
-train_x, train_y, test_x, test_y, list_ip = create_data_model()
+train_x, train_y, test_x, test_y, list_ip, x_input, input_ip = create_data_model()
 
 n_nodes_hl1 = 100
 n_nodes_hl2 = 100
@@ -16,9 +17,10 @@ hm_epochs = 20
 
 x = tf.placeholder('float')
 y = tf.placeholder('float')
+z = tf.placeholder('float')
 
 hidden_1_layer = {'f_fum': n_nodes_hl1,
-                  'weight': tf.Variable(tf.random_normal([len(train_x[0]), n_nodes_hl1])),
+                  'weight': tf.Variable(tf.random_normal([train_x.shape[1], n_nodes_hl1])),
                   'bias': tf.Variable(tf.random_normal([n_nodes_hl1]))}
 
 hidden_2_layer = {'f_fum': n_nodes_hl2,
@@ -84,33 +86,42 @@ def train_neural_network(x):
 
         return result_array
 
-def train_neural_network2(x):
-    prediction = neural_network_model(x)
+train_neural_network(x)
+
+def train_neural_network2(z):
+    prediction = neural_network_model(z)
     with tf.Session() as sess:
         sess.run(tf.initialize_all_variables())
         result_array = np.array([])
-
-        batch_x = np.array(test_x)
-        result = (sess.run(tf.argmax(prediction.eval(feed_dict={x: batch_x}), 1)))
+        batch_x = np.array(x_input)
+        result = (sess.run(tf.argmax(prediction.eval(feed_dict={z: batch_x}), 1)))
         # print(result)
         result_array = np.append(result_array, result)
 
     return result_array
 
-def show_output(list_ip):
+def show_output(input_ip):
     a_count = 0
     d_count = 0
-    result = train_neural_network(x)
+    result = train_neural_network2(z)
     for q in range(len(result)):
         if result[q] == 0:
             #print('a')
-            print('Allow' + str(list_ip[q]))
+            input_ip[q].insert(0,'allow')
+            print(input_ip[q])
             a_count += 1
         elif result[q] == 1:
             #print('d')
-            print('Deny' + str(list_ip[q]))
+            input_ip[q].insert(0,'deny')
+            print(input_ip[q])
             d_count += 1
     print(a_count)
     print(d_count)
+    with open('output.csv', 'w') as filehandle:
+        for l in input_ip:
+            for col in l:
+                filehandle.write(col)
+                filehandle.write(',')
+            filehandle.write('\n')
 
-show_output(list_ip)
+show_output(input_ip)
