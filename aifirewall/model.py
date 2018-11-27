@@ -1,5 +1,3 @@
-from numpy.core.multiarray import ndarray
-
 from convert_data import create_data_model
 from convert_data import create_data_input
 import tensorflow as tf
@@ -8,13 +6,13 @@ import numpy as np
 train_x, train_y, test_x, test_y, list_ip = create_data_model()
 x_input, input_ip = create_data_input()
 
-n_nodes_hl1 = 200
-n_nodes_hl2 = 200
-n_nodes_hl3 = 200
+n_nodes_hl1 = 300
+n_nodes_hl2 = 300
+n_nodes_hl3 = 300
 
 n_classes = 2
-batch_size = 200
-hm_epochs = 20
+batch_size = 300
+hm_epochs = 15
 
 x = tf.placeholder('float')
 y = tf.placeholder('float')
@@ -60,7 +58,6 @@ def train_neural_network(x):
     with tf.Session() as sess:
         sess.run(tf.initialize_all_variables())
         for epoch in range(hm_epochs):
-            result_array = np.array([])
             epoch_loss = 0
             i = 0
 
@@ -74,50 +71,29 @@ def train_neural_network(x):
                                                               y: batch_y})
                 epoch_loss += c
                 i += batch_size
-                result = (sess.run(tf.argmax(prediction.eval(feed_dict={x: batch_x}), 1)))
-                # print(result)
-                result_array = np.append(result_array, result)
 
             print('Epoch', epoch + 1, 'completed out of', hm_epochs, 'loss:', epoch_loss)
 
         correct = tf.equal(tf.argmax(prediction, 1), tf.argmax(y, 1))
         accuracy = tf.reduce_mean(tf.cast(correct, 'float'))
 
+
         print("Accuracy:", accuracy.eval({x: test_x, y: test_y}))
 
-        return result_array
-
-train_neural_network(x)
-
-def train_neural_network2(z):
-    prediction = neural_network_model(z)
-    with tf.Session() as sess:
-        sess.run(tf.initialize_all_variables())
         result_array = np.array([])
         batch_x = np.array(x_input)
         result = (sess.run(tf.argmax(prediction.eval(feed_dict={z: batch_x}), 1)))
-        # print(result)
         result_array = np.append(result_array, result)
+        return result_array
 
-    return result_array
 
 def show_output(input_ip):
-    a_count = 0
-    d_count = 0
-    result = train_neural_network2(z)
-    for q in range(len(result)):
-        if result[q] == 0:
-            #print('a')
-            input_ip[q].insert(0,'allow')
-            print(input_ip[q])
-            a_count += 1
-        elif result[q] == 1:
-            #print('d')
-            input_ip[q].insert(0,'deny')
-            print(input_ip[q])
-            d_count += 1
-    print(a_count)
-    print(d_count)
+    result = train_neural_network(z)
+    for i in range(len(result)):
+        if result[i] == 0:
+            input_ip[i].insert(0,'allow')
+        elif result[i] == 1:
+            input_ip[i].insert(0,'deny')
     with open('output.csv', 'w') as filehandle:
         for l in input_ip:
             for col in l:
