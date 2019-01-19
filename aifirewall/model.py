@@ -3,16 +3,16 @@ from convert_data import create_data_input
 import tensorflow as tf
 import numpy as np
 
-train_x, train_y, test_x, test_y, list_ip = create_data_model()
+train_x, train_y, list_ip = create_data_model()
 x_input, input_ip = create_data_input()
 
-n_nodes_hl1 = 300
-n_nodes_hl2 = 300
-n_nodes_hl3 = 300
+n_nodes_hl1 = 210
+n_nodes_hl2 = 210
+n_nodes_hl3 = 210
 
 n_classes = 2
-batch_size = 300
-hm_epochs = 15
+batch_size = 500
+hm_epochs = 10
 
 x = tf.placeholder('float')
 y = tf.placeholder('float')
@@ -61,7 +61,7 @@ def train_neural_network(x):
             epoch_loss = 0
             i = 0
 
-            while i <= len(train_x):
+            while i < len(train_x):
                 start = i
                 end = i + batch_size
                 batch_x = np.array(train_x[start:end])
@@ -74,13 +74,9 @@ def train_neural_network(x):
 
             print('Epoch', epoch + 1, 'completed out of', hm_epochs, 'loss:', epoch_loss)
 
-        correct = tf.equal(tf.argmax(prediction, 1), tf.argmax(y, 1))
-        accuracy = tf.reduce_mean(tf.cast(correct, 'float'))
-
-
-        print("Accuracy:", accuracy.eval({x: test_x, y: test_y}))
-
         result_array = np.array([])
+
+
         batch_x = np.array(x_input)
         result = (sess.run(tf.argmax(prediction.eval(feed_dict={z: batch_x}), 1)))
         result_array = np.append(result_array, result)

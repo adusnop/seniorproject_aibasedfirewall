@@ -1,28 +1,13 @@
 import random
-
-
-def create_ip():
-    ip_range = ['192.168.', '100.100.']
-    with open('IP_train.txt', 'w') as filehandle, open('IP_input.txt', 'w') as filehandle2:
-        for i in range(500):
-            ip_range2 = random.choice(ip_range)
-            ip_source_train = ip_range2 + str(random.randint(1, 256)) + '.' + str(random.randint(1, 256)) + '/16' + '\n'
-            ip_source_input = ip_range2 + str(random.randint(1, 256)) + '.' + str(random.randint(1, 256)) + '/16' + '\n'
-            filehandle.write(ip_source_train)
-            filehandle2.write(ip_source_input)
-
-
-create_ip()
-
+import itertools
 
 def write_rules_train():
-    ip_range = ['192.168.', '10.10.']
     ip_destlist = ['161.246.34.11/16', '161.246.34.21/16']
     protocol_list = ['tcp', 'udp']
-    with open('IP_train.txt', 'r') as filehandle3, open('rules_train.csv', 'w') as file_data:
+    with open('IP_train2.txt', 'r') as filehandle3, open('rules_train.csv', 'w') as file_data:
         d_count = 0
         a_count = 0
-        for line in filehandle3:
+        for line in itertools.islice(filehandle3, 0, 500):
             ip = line[:-1]
             ip_dest = random.choice(ip_destlist)
             if ip_dest == '161.246.34.21/16':
@@ -44,11 +29,11 @@ def write_rules_train():
             file_data.write('in,')
             file_data.write('eth0,')
             file_data.write(protocol + ',')
-            file_data.write(ip[0:8] + ',')
-            file_data.write(ip[8:len(ip)] + ',')
+            file_data.write(ip[0:3] + ',')
+            file_data.write(ip[3:len(ip)] + ',')
             file_data.write(port + ',')
-            file_data.write(str(ip_dest[0:8]) + ',')
-            file_data.write(str(ip_dest[8:len(ip)]) + ',')
+            file_data.write(str(ip_dest[0:3]) + ',')
+            file_data.write(str(ip_dest[3:len(ip_destlist[0])])+ ',')
             file_data.write(port + ',')
             file_data.write('\n')
 
@@ -62,10 +47,10 @@ write_rules_train()
 def write_rules_input():
     ip_destlist = ['161.246.34.11/16', '161.246.34.21/16']
     protocol_list = ['tcp', 'udp']
-    with open('IP_input.txt', 'r') as filehandle4, open('rules_input.csv', 'w') as file_data_input:
+    with open('ip_input_2diff500.txt', 'r') as filehandle4, open('rules_input.csv', 'w') as file_data_input:
         d_count = 0
         a_count = 0
-        for line in filehandle4:
+        for line in itertools.islice(filehandle4, 0, 500):
             ip = line[:-1]
             ip_dest = random.choice(ip_destlist)
             if ip_dest == '161.246.34.21/16':
@@ -87,11 +72,11 @@ def write_rules_input():
             file_data_input.write('in,')
             file_data_input.write('eth0,')
             file_data_input.write(protocol + ',')
-            file_data_input.write(ip[0:8] + ',')
-            file_data_input.write(ip[8:len(ip)] + ',')
+            file_data_input.write(ip[0:3] + ',')
+            file_data_input.write(ip[3:len(ip)] + '/24' + ',')
             file_data_input.write(port + ',')
-            file_data_input.write(str(ip_dest[0:8]) + ',')
-            file_data_input.write(str(ip_dest[8:len(ip)]) + ',')
+            file_data_input.write(str(ip_dest[0:3]) + ',')
+            file_data_input.write(str(ip_dest[3:len(ip_destlist[0])]) + ',')
             file_data_input.write(port + ',')
             file_data_input.write('\n')
 

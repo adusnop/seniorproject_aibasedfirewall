@@ -4,7 +4,7 @@ import random
 def create_ip():
     ip_range = ['192.168.', '10.10.']
     with open('IP_train.txt', 'w') as filehandle, open('IP_input.txt', 'w') as filehandle2:
-        for i in range(500):
+        for i in range(300):
             ip_range2 = random.choice(ip_range)
             ip_source_train = ip_range2 + str(random.randint(1, 256)) + '.' + str(random.randint(1, 256)) + '/24' + '\n'
             ip_source_input = ip_range2 + str(random.randint(1, 256)) + '.' + str(random.randint(1, 256)) + '/24' + '\n'
