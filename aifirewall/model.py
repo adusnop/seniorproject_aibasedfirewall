@@ -12,7 +12,7 @@ n_nodes_hl3 = 210
 
 n_classes = 2
 batch_size = 500
-hm_epochs = 10
+hm_epochs = 20
 
 x = tf.placeholder('float')
 y = tf.placeholder('float')

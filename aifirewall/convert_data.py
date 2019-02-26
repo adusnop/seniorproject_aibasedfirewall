@@ -4,7 +4,7 @@ import csv
 
 
 def create_data_model():
-    with open('rules_train2_diffinput.csv', 'r') as f:
+    with open('rules_train.csv', 'r') as f:
         line = csv.reader(f)
         list_ip = [li[:-1] for li in line]
         list_action = [item.pop(0) for item in list_ip]
@@ -34,7 +34,7 @@ create_data_model()
 
 
 def create_data_input():
-    with open('rules_input2_diffinput.csv', 'r') as f:
+    with open('packet_diff.csv', 'r') as f:
         line1 = csv.reader(f)
         list_ip1 = [li[:-1] for li in line1]
         list_action = [item.pop(0) for item in list_ip1]

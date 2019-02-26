@@ -2,7 +2,7 @@ import csv
 
 
 def compare_output():
-    with open('output.csv', 'r') as filehandle, open('rules_input2_diffinput.csv', 'r') as filehandle2:
+    with open('output.csv', 'r') as filehandle, open('packet_diff.csv', 'r') as filehandle2:
         line = csv.reader(filehandle)
         line2 = csv.reader(filehandle2)
         correct = 0

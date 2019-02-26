@@ -1,0 +1,4 @@
+allow in on eth0 from 192.168.0.0/16 to 161.246.34.11/24 port 80 any
+allow in on eth0 from 192.168.0.0/16 to 161.246.34.21/24 port 22 any
+allow in on eth0 from 100.100.0.0/16 to 161.246.34.11/24 port 80 any
+deny in on eth0 from 100.100.0.0/16 to 161.246.34.21/24 port 22 any
