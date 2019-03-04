@@ -19,7 +19,7 @@ def conv_to_bit(value_hex, type):
     return value_bit
 
 def convert_packet():
-    with open('c_packet.csv', 'w') as file_data,  open('Packets_test1.txt', 'r') as file_packt:
+    with open('c_packet.csv', 'w') as file_data,  open('pk.txt', 'r') as file_packt:
         file_data.write('Action' + ',')
         file_data.write('Direction' + ',')
         file_data.write('Mask' + ',')
@@ -37,7 +37,7 @@ def convert_packet():
         file_data.write('Mask' + ',')
         file_data.write('\n')
 
-
+        a = 1
         for line in file_packt:
 
             if line[0] == '|':
@@ -96,7 +96,9 @@ def convert_packet():
                 file_data.write('11111111')
                 file_data.write('\n')
 
+                a += 1
                 print(s_port_bit)
+                print(a)
 
 
 

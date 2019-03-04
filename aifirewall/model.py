@@ -1,10 +1,10 @@
-from convert_data import create_data_model
-from convert_data import create_data_input
+from convert_data2 import array_rule
+from convert_data2 import array_packet
 import tensorflow as tf
 import numpy as np
 
-train_x, train_y, list_ip = create_data_model()
-x_input, input_ip = create_data_input()
+train_x, train_y = array_packet()
+x_input, input_ip = array_rule()
 
 n_nodes_hl1 = 210
 n_nodes_hl2 = 210
@@ -75,26 +75,11 @@ def train_neural_network(x):
             print('Epoch', epoch + 1, 'completed out of', hm_epochs, 'loss:', epoch_loss)
 
         result_array = np.array([])
-
-
         batch_x = np.array(x_input)
+        print(batch_x)
         result = (sess.run(tf.argmax(prediction.eval(feed_dict={z: batch_x}), 1)))
         result_array = np.append(result_array, result)
+
         return result_array
 
-
-def show_output(input_ip):
-    result = train_neural_network(z)
-    for i in range(len(result)):
-        if result[i] == 0:
-            input_ip[i].insert(0,'allow')
-        elif result[i] == 1:
-            input_ip[i].insert(0,'deny')
-    with open('output.csv', 'w') as filehandle:
-        for l in input_ip:
-            for col in l:
-                filehandle.write(col)
-                filehandle.write(',')
-            filehandle.write('\n')
-
-show_output(input_ip)
+train_neural_network(x)

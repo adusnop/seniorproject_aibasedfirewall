@@ -67,6 +67,7 @@ def c_protocol(protocol):
     return value_b, mask
 
 def convert_rules():
+    rule_list = []
     with open('c_rule.csv', 'w') as file_data,  open('t_rule.csv', 'r') as filehandle2:
         file_data.write('Action' + ',')
         file_data.write('Direction' + ',')
@@ -88,6 +89,7 @@ def convert_rules():
 
         for line in filehandle2:
             if line[0] != 'A':
+                data_list = []
                 line_rule = line.split(',')
                 action_bit = c_action(line_rule[0])
                 print(line_rule[1])
@@ -116,7 +118,6 @@ def convert_rules():
                 file_data.write(protocol_bit + ',')
                 file_data.write(protocol_mask_bit)
                 file_data.write('\n')
-
 
 
 convert_rules()

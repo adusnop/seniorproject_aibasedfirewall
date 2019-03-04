@@ -4,7 +4,7 @@ import csv
 
 
 def create_data_model():
-    with open('rules_train.csv', 'r') as f:
+    with open('ftest.txt', 'r') as f:
         line = csv.reader(f)
         list_ip = [li[:-1] for li in line]
         list_action = [item.pop(0) for item in list_ip]
